@@ -1,0 +1,17 @@
+[
+   {
+	"fecha":"07-10-2018",
+	"coords": [{
+			"Latitud": -31.4293,
+			"Longitud": -64.1752
+		},
+		{
+			"Latitud": -31.433216,
+			"Longitud": -64.18754
+		}
+	],
+     "distancia": "1010",
+     "duracion": "40",
+     "ritmo":"30000"
+   }
+]

@@ -1,0 +1,21 @@
+<resources>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">RunningColoApp</string>
+    <string name="titulo_registry_activity">Registro de carrera</string>
+    <string name="title_activity_detail_map_run">Map</string>
+    <string name="titulo_list_activity">Lista de carreras realizadas</string>
+    <string name="titulo_detail_activity">Detalle de la carrera</string>
+    <string name="tiempo_fragment_running">A correr!!</string>
+    <string name="title_activity_list_cell">ListCellActivity</string>
+    <string name="titulo_file_not_found_from_list_activity">Error inesperado!</string>
+
+    <string name="titulo_boton_start_cronometro">Comenzar</string>
+    <string name="titulo_boton_stop_cronometro">Detener</string>
+    <string name="titulo_boton_reset_cronometro">Reiniciar</string>
+    <string name="titulo_boton_pause_cronometro">Pausar</string>
+    <string name="titulo_boton_splash">IR A PANTALLA DE INICIO!</string>
+    <string name="titulo_boton_pantalla_registro_go">GO!</string>
+    <string name="titulo_boton_celda_detalle">Ver en detalle</string>
+    <string name="titulo_boton_map_race_detail">Ver el recorrido realizado en un mapa</string>
+
+</resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".com.iua.fabio.runningcoloapp.actividades.RunningFragment"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/textvf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tiempo_fragment_running"
+        android:textSize="40dp"
+        />
+
+    <Chronometer
+        android:id="@+id/cronometro"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="30sp"
+        />
+
+    <Button
+        android:id="@+id/bstopcron"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/titulo_boton_stop_cronometro"
+        />
+
+    <Button
+        android:id="@+id/bresetcron"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/titulo_boton_reset_cronometro"
+
+        />
+
+    <Button
+        android:id="@+id/bpausecron"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/titulo_boton_pause_cronometro"
+
+        />
+
+    <Button
+        android:id="@+id/bstartcron"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/titulo_boton_start_cronometro"
+
+        />
+
+</LinearLayout>
