@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-
 import com.iua.fabio.runningcoloapp.R;
 
 //public class RegistryActivity extends FragmentActivity {
@@ -19,22 +18,22 @@ public class RegistryActivity extends AppCompatActivity implements RunningFragme
         setContentView(R.layout.activity_registry);
         setTitle(R.string.titulo_registry_activity);
 
-        RunningFragment rf=new RunningFragment();
+        RunningFragment rf = new RunningFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.contenedor, rf);
 
-        Button boton_start=findViewById(R.id.button2);
-        boton_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToRunningFragment(v);
-            }
-        });
-
-        FloatingActionButton fab=findViewById(R.id.floatingActionButton);
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToListActivity(v);
+            }
+        });
+
+        Button boton_start = findViewById(R.id.button2);
+        boton_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToRunningFragment(v);
             }
         });
     }

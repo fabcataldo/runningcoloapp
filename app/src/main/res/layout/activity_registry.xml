@@ -13,6 +13,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!--
+        <TextView
+            android:id="@+id/tvprueba"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="tvprueba"
+            android:textSize="40dp"
+            />
+        -->
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton"
             android:layout_width="match_parent"
