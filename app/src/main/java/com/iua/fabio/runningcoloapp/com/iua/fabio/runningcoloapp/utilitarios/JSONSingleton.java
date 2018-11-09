@@ -167,8 +167,8 @@ public class JSONSingleton {
 
                 for(int j=0;j<getInstancia().getRaceDataList().get(i).getCoords().size();j++){
                     JSONObject coordsJSONObj=new JSONObject();
-                    coordsJSONObj.put("Latitud", coords[j][0]);
-                    coordsJSONObj.put("Longitud", coords[j][1]);
+                    coordsJSONObj.put("Latitud", getInstancia().getRaceDataList().get(i).getCoords().get(j).getLatitud());
+                    coordsJSONObj.put("Longitud", getInstancia().getRaceDataList().get(i).getCoords().get(j).getLongitud());
                     coordsArrObjsJSON.put(j, coordsJSONObj);
                 }
                 raceDataElement.put("coords", coordsArrObjsJSON);

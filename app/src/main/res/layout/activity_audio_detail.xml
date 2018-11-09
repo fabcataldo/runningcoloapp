@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".com.iua.fabio.runningcoloapp.actividades.AudioDetailActivity">
+
+
+    <TextView
+        android:id="@+id/audioname"
+        android:layout_width="334dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="asd "
+        android:textSize="30dp"
+        android:textAlignment="center"
+        />
+
+
+    <Button
+        android:id="@+id/audiopausebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="4dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="Pausar" />
+
+    <Button
+        android:id="@+id/audioplaybutton"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="Poné PLAY!!" />
+
+    <Button
+        android:id="@+id/audiostopbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="Detener" />
+
+
+</LinearLayout>

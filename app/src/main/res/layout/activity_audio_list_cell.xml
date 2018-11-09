@@ -4,22 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".com.iua.fabio.runningcoloapp.actividades.ListCellActivity"
-    android:orientation="horizontal">
+    tools:context=".com.iua.fabio.runningcoloapp.actividades.AudioListCell"
+    android:orientation="horizontal"
+    >
 
 
     <TextView
-        android:id="@+id/tvrace"
+        android:id="@+id/audiotextview1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="xx" />
-
-    
-    <Button
-        android:id="@+id/buttondetail"
-        android:layout_width="10dp"
-        android:layout_height="40dp"
         android:layout_weight="1"
-        android:text="@string/titulo_boton_celda_detalle" />
+        android:text="TextView" />
 
+
+    <Button
+        android:id="@+id/audiodetailbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Ir a esta canción" />
 </LinearLayout>

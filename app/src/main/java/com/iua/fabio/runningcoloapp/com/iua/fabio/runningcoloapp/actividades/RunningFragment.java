@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.TextView;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -60,7 +62,14 @@ public class RunningFragment extends Fragment{
     private boolean mRequestingLocationUpdates;
     private Location firstLocation;
     private Location lastLocation;
-    private boolean señalLocatReq;
+
+    private double ritmo;
+    private long ritmelapsedMillis;
+    private double ritmelapsedSeconds;
+    private double ritmelapsedMinutes;
+    private double distancia;
+    private double acumuladorPromedio;
+    private double ritmoPromedio;
 
     public RunningFragment() {
         // Required empty public constructor
@@ -105,18 +114,28 @@ public class RunningFragment extends Fragment{
         cronometro.setBase(SystemClock.elapsedRealtime());
 
         raceBestLocations = new ArrayList<Location>();
-
-
         mFusedProviderLocationClient=LocationServices.getFusedLocationProviderClient(this.getActivity());
-
         createLocationRequest();
 
+        ritmelapsedMillis = SystemClock.elapsedRealtime() - cronometro.getBase();
+        ritmelapsedSeconds = (ritmelapsedMillis*0.001) /1;
+        ritmelapsedMinutes = (ritmelapsedSeconds*1) /60;
+
+        //si en 1 metro hice tantos minutos, en 10, x
+        ritmo=(10*ritmelapsedMinutes)/1;
+
+        TextView txtvritmo = actualV.findViewById(R.id.textvritmo);
+        txtvritmo.setText("");
+        txtvritmo.setText("Ritmo: "+ritmo+" minutos cada 10 metros");
+
+        if(ritmelapsedMinutes>=10){
+            acumuladorPromedio+=ritmo;
+        }
 
         Button botons=actualV.findViewById(R.id.bstartcron);
         botons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 comenzar(v);
             }
         });
@@ -149,61 +168,28 @@ public class RunningFragment extends Fragment{
             }
         });
 
-        //final TextView v = findViewById(R.id.tvprueba);
         mLocationCallback = new LocationCallback() {
             public void onLocationResult(LocationResult location) {
                 if (location != null) {
                     if(firstLocation==null) {
                         setFirstLocation(location.getLastLocation());
+                        addElementRaceBestLocations(firstLocation);
                     }
                     if(firstLocation.getLatitude() != location.getLastLocation().getLatitude()
                             && firstLocation.getLongitude() != location.getLastLocation().getLongitude()) {
                         setLastLocation(location.getLastLocation());
                     }
-                    System.out.println("FIRST LOCATION: "+firstLocation.getLongitude()+", "+firstLocation.getLatitude());
-                    if(lastLocation!=null)
-                        System.out.println("LAST LOCATION: "+lastLocation.getLongitude()+", "+lastLocation.getLatitude());
-
-                    /*
-                    for (int i = 0; i < location.getLocations().size(); i++) {
-                        locationsGetted.add(location.getLocations().get(i));
-                    }
-                    */
-                    //lastLocation=location.getLocations().get(locationsGetted.size()-1);
-
-                    //System.out.println("DEGREEES OF LAST AND FIRST LOCATION: "+bearing(firstLocation.getLatitude(),firstLocation.getLongitude(),lastLocation.getLatitude(),lastLocation.getLongitude()));
                 }
                 else{
                     return;
                 }
 
-                /*
-                for(int i=0;i<locationsGetted.size();i++){
-                    System.out.println("LOCATIONS GETTED: "+locationsGetted.get(i).getLongitude()+", "+locationsGetted.get(i).getLatitude());
-                    System.out.println("LOCATIONS GETTED DEGREES: "+bearing(locationsGetted.get(i).getLatitude(),locationsGetted.get(i).getLongitude(),firstLocation.getLatitude(),firstLocation.getLongitude()));
-                }
-                */
-                /*
-                for (int i = 0; i < locationsGetted.size()-1; i++) {
-                    //if(firstLocation.getBearing() - locationsGetted.get(i).getBearing() > 45){
-                    //if(isBetterLocation(firstLocation, locationsGetted.get(i))){
-                    //if(isBetterLocation(location.getLastLocation(), firstLocation)){
-                    if(isBetterLocation(location.getLastLocation(), firstLocation) && bearing(locationsGetted.get(i).getLatitude(),locationsGetted.get(i).getLongitude(),firstLocation.getLatitude(),firstLocation.getLongitude())>45){
-                        bestLocation=location.getLastLocation();
-                        System.out.println("Location actual(best): "+bestLocation.getLatitude() +", "+ bestLocation.getLongitude());
-                        v.setText("Location actual(best): "+bestLocation.getLatitude() +", "+ bestLocation.getLongitude());
-                    }
-                    //System.out.println("Locacion de : "+locationsGetted.get(i).getBearing());
-                }
-                */
                 if(lastLocation!=null) {
                     if (isBetterLocation(lastLocation, firstLocation) && calcGrados(firstLocation.getLatitude(), firstLocation.getLongitude(), lastLocation.getLatitude(), lastLocation.getLongitude()) > 45) {
                         addElementRaceBestLocations(lastLocation);
                     } else {
-                        addElementRaceBestLocations(firstLocation);
+                        //addElementRaceBestLocations(firstLocation);
                     }
-                    //System.out.println("Location actual(best): " + bestLocation.getLatitude() + ", " + bestLocation.getLongitude());
-                    //v.setText("Location actual(best): " + bestLocation.getLatitude() + ", " + bestLocation.getLongitude());
                     setFirstLocation(null);
                     setLastLocation(null);
                 }
@@ -231,25 +217,38 @@ public class RunningFragment extends Fragment{
         grabarDatos();
     }
 
+    //Devuelve la distancia recorrida entre dos puntos
+    private double measure(Location l1, Location l2) {  // generally used geo measurement function
+        double R = 6378.137; // Radius of earth in KM
+        double dLat = l1.getLatitude() * Math.PI / 180 - l1.getLatitude() * Math.PI / 180;
+        double dLon = l2.getLongitude() * Math.PI / 180 - l1.getLongitude() * Math.PI / 180;
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(l1.getLatitude() * Math.PI / 180) * Math.cos(l2.getLatitude() * Math.PI / 180) *
+                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double d = R * c;
+        return d * 1000; // meter
+    }
+
     private void grabarDatos(){
         long elapsedMillis = SystemClock.elapsedRealtime() - cronometro.getBase();
         double elapsedSeconds = (elapsedMillis*0.001) /1;
         double elapsedMinutes = (elapsedSeconds*1) /60;
 
         double[][] coordsarray=new double[raceBestLocations.size()][2];
-        /*
-        CoordData coords=new CoordData(-31.4293, -64.1752);
-        CoordData coords2=new CoordData(-31.433216, -64.18754);
-        double[][] coordsarray=new double[2][2];
-        coordsarray[0]=coords.getCoordsArray();
-        coordsarray[1]=coords2.getCoordsArray();
-        */
 
         CoordData coords;
+        distancia=0;
         for(int i =0;i<raceBestLocations.size();i++){
             coords=new CoordData(raceBestLocations.get(i).getLatitude(), raceBestLocations.get(i).getLongitude());
             coordsarray[i]=coords.getCoordsArray();
+            if((i+1) != raceBestLocations.size()){
+                distancia+=measure(raceBestLocations.get(i),raceBestLocations.get(i+1));
+            }
         }
+
+        //el ritmo promedio va a ser, lo que acumulé en toda la carrera dividido 10 metros
+        ritmoPromedio=acumuladorPromedio/10;
 
         Calendar c2 = new GregorianCalendar();
         String dia = Integer.toString(c2.get(Calendar.DATE));
@@ -267,12 +266,9 @@ public class RunningFragment extends Fragment{
         }
         String fecha=dia+"/"+mes+"/"+anio+" "+hours+":"+pseudominutes;
 
-        double ritmo=30;
-        double distancia=30;
-
         try {
             String pathJson="/race_data.json";
-            JSONSingleton.getInstancia().writeToJSON(pathJson,fecha, coordsarray, elapsedMinutes,  ritmo, distancia, this.getContext(), this.getActivity());
+            JSONSingleton.getInstancia().writeToJSON(pathJson,fecha, coordsarray, elapsedMinutes, ritmoPromedio, distancia, this.getContext(), this.getActivity());
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -306,7 +302,7 @@ public class RunningFragment extends Fragment{
         raceBestLocations.add(element);
     }
 
-
+    //Calcula la diferencia de grados entre dos puntos
     protected double calcGrados(double startLat, double startLng, double endLat, double endLng){
         double longitude1 = startLng;
         double longitude2 = endLng;
@@ -326,6 +322,13 @@ public class RunningFragment extends Fragment{
      * @param location  The new Location that you want to evaluate
      * @param currentBestLocation  The current Location fix, to which you want to compare the new one
      */
+    //Primero pregunta si sólo se está enviando el argumento "location"
+    //entonces, el nuevo punto del gps es el mejor
+    //si no, comprueba qué tan nuevo es la nueva localización con respecto a la
+    //localización que queremos comparar
+    //si la nueva localización es nueva, devuelve true, si no, false
+    //utiliza también la precisión de las dos localizaciones, para ver cuál de las dos es mejor
+    //tiene en cuenta la precisión, y si vienen del mismo provider (wifi o datos, o gps)
     protected boolean isBetterLocation(Location location, Location currentBestLocation) {
         //System.out.println("ENTRO ACAAA");
         if (currentBestLocation == null) {

@@ -8,13 +8,24 @@ public class SongData implements Serializable {
     private String artist;
     private String cover;
     private String song_id;
+    private String song_location;
 
-    public SongData(String song_title, String album, String artist, String cover, String song_id) {
+    public SongData(String song_title, String album, String artist, String cover, String song_id,
+                    String song_location) {
         this.song_title = song_title;
         this.album = album;
         this.artist = artist;
         this.cover = cover;
         this.song_id = song_id;
+        this.song_location = song_location;
+    }
+
+    public String getSong_location() {
+        return song_location;
+    }
+
+    public void setSong_location(String song_location) {
+        this.song_location = song_location;
     }
 
     public String getSong_title() {
@@ -65,6 +76,7 @@ public class SongData implements Serializable {
                 ", artist='" + artist + '\'' +
                 ", cover='" + cover + '\'' +
                 ", song_id='" + song_id + '\'' +
+                ", song_location='" + song_location + '\'' +
                 '}';
     }
 }

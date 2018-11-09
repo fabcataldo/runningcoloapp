@@ -10,6 +10,7 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+
     <TextView
         android:id="@+id/textvf"
         android:layout_width="wrap_content"
@@ -25,35 +26,50 @@
         android:textSize="30sp"
         />
 
-    <Button
-        android:id="@+id/bstopcron"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/titulo_boton_stop_cronometro"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
     <Button
-        android:id="@+id/bresetcron"
+            android:id="@+id/bstopcron"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/titulo_boton_stop_cronometro"
+            />
+
+        <Button
+            android:id="@+id/bresetcron"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/titulo_boton_reset_cronometro"
+
+            />
+
+        <Button
+            android:id="@+id/bpausecron"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/titulo_boton_pause_cronometro"
+
+            />
+
+        <Button
+            android:id="@+id/bstartcron"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/titulo_boton_start_cronometro"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textvritmo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/titulo_boton_reset_cronometro"
-
+        android:text=""
+        android:textSize="30dp"
+        android:layout_gravity="center"
         />
 
-    <Button
-        android:id="@+id/bpausecron"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/titulo_boton_pause_cronometro"
-
-        />
-
-    <Button
-        android:id="@+id/bstartcron"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/titulo_boton_start_cronometro"
-
-        />
 
 </LinearLayout>

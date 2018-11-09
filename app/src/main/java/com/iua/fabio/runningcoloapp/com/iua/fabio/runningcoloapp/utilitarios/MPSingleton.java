@@ -3,13 +3,14 @@ package com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.utilitarios;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
+import android.net.Uri;
 
 import java.io.IOException;
 
 public class MPSingleton {
     private static MPSingleton _instance=null;
     private static MediaPlayer _mp=null;
-    private int firstSong=0;
+    private Uri firstSong= Uri.parse("xx");
     private int currentPos=0;
 
     public MPSingleton() {
@@ -24,14 +25,13 @@ public class MPSingleton {
         return _instance;
     }
 
-    public void prepareMedia(Context mContext, int res){
-        if(firstSong==0 || firstSong!=res) {
+    public void prepareMedia(Context mContext, Uri res){
+        if(firstSong.getPath()=="xx" || firstSong!=res) {
             getInstance().get_mp().reset();
             firstSong=res;
-            AssetFileDescriptor afd = mContext.getResources().openRawResourceFd(res);
 
             try {
-                getInstance().get_mp().setDataSource(afd);
+                getInstance().get_mp().setDataSource(mContext, res);
             } catch (IOException e) {
                 e.printStackTrace();
             }

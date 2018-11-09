@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.iua.fabio.runningcoloapp.R;
 import com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.modelo.SongData;
+import com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.utilitarios.AudioCustomListAdapter;
 import com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.utilitarios.MPSingleton;
 
 import java.util.ArrayList;
@@ -44,11 +45,12 @@ public class AudioListFragment extends Fragment {
     private String mParam2;
     private View actualView;
     private static final int MY_PERMISSION_REQUEST = 1;
-    ArrayList<String> arrayList;
-    ListView listView;
-    ArrayList<SongData> songlist;
-    ArrayAdapter<String> adapter;
-    Context ctx;
+    private ArrayList<String> arrayList;
+    private ListView listView;
+    private ArrayList<SongData> songlist;
+    private ArrayAdapter<String> adapter;
+    private Context ctx;
+    private Uri resSongID;
 
     private OnFragmentInteractionListener mListener;
 
@@ -104,6 +106,7 @@ public class AudioListFragment extends Fragment {
             doStuff();
         }
 
+
         return actualView;
     }
 
@@ -111,29 +114,26 @@ public class AudioListFragment extends Fragment {
         arrayList = new ArrayList<>();
         songlist = new ArrayList<SongData>();
         getMusic();
-
+        AudioCustomListAdapter acla=new AudioCustomListAdapter(ctx);
+        acla.setLcd(songlist);
+        listView.setAdapter(acla);
+        /*
         adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                final int resSongID = getResources().getIdentifier(songlist.get(position).getSong_id(), "raw", getActivity().getPackageName());
-                //System.out.println("IDDDDDDDD: " + songlist.get(position).getSong_id());
+                resSongID = Uri.parse(songlist.get(position).getSong_location());
                 MPSingleton.getInstance().prepareMedia(ctx, resSongID);
 
-                if(MPSingleton.getInstance().get_mp().isPlaying()) {
-                    MPSingleton.getInstance().get_mp().pause();
-                }
-                else{
-                    MPSingleton.getInstance().play();
-                }
+                MPSingleton.getInstance().play();
             }
         });
+        */
     }
 
-    public void getMusic() {
+    public void getMusic(){
         ContentResolver contentResolver = getActivity().getContentResolver();
         Uri songUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         Cursor songcursor = contentResolver.query(songUri, null, null, null, null);
@@ -141,15 +141,19 @@ public class AudioListFragment extends Fragment {
         if (songcursor != null && songcursor.moveToFirst()) {
             int songTitle = songcursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
             int songArtist = songcursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
-            String songLocation = songcursor.getString(songcursor.getColumnIndex(MediaStore.Audio.Media.DATA));
-            String songid = songcursor.getString(songcursor.getColumnIndex(MediaStore.Audio.Media._ID));
+            int songLocation = songcursor.getColumnIndex(MediaStore.Audio.Media.DATA);
+            int songid = songcursor.getColumnIndex(MediaStore.Audio.Media._ID);
+            int songAlbum = songcursor.getColumnIndex(MediaStore.Audio.Media.ALBUM);
             do {
                 String currentTitle = songcursor.getString(songTitle);
                 String currentArtist = songcursor.getString(songArtist);
-
+                String currentLocation = songcursor.getString(songLocation);
+                String currentAlbum = songcursor.getString(songAlbum);
+                String currentid=songcursor.getString(songid);
                 arrayList.add(currentTitle + "\n" + currentArtist);
 
-                songlist.add(new SongData(currentTitle, "", "", "", songid));
+                songlist.add(new SongData(currentTitle, currentAlbum, currentArtist,
+                        "", currentid, currentLocation));
             } while (songcursor.moveToNext());
         }
     }
@@ -160,12 +164,9 @@ public class AudioListFragment extends Fragment {
                 if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
                     if(ContextCompat.checkSelfPermission(this.getContext(),
                             Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager. PERMISSION_GRANTED){
-                        //Toast.makeText(this,"permission granted", Toast.LENGTH_SHORT).show();
-
                         doStuff();
                     }else{
-                        //Toast.makeText(this,"NO permission granted", Toast.LENGTH_SHORT).show();
-                        //finish();
+
                     }
                     return;
                 }
