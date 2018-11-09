@@ -117,20 +117,6 @@ public class AudioListFragment extends Fragment {
         AudioCustomListAdapter acla=new AudioCustomListAdapter(ctx);
         acla.setLcd(songlist);
         listView.setAdapter(acla);
-        /*
-        adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, arrayList);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                resSongID = Uri.parse(songlist.get(position).getSong_location());
-                MPSingleton.getInstance().prepareMedia(ctx, resSongID);
-
-                MPSingleton.getInstance().play();
-            }
-        });
-        */
     }
 
     public void getMusic(){

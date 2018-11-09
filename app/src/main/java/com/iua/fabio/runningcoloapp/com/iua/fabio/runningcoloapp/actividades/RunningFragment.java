@@ -117,20 +117,28 @@ public class RunningFragment extends Fragment{
         mFusedProviderLocationClient=LocationServices.getFusedLocationProviderClient(this.getActivity());
         createLocationRequest();
 
-        ritmelapsedMillis = SystemClock.elapsedRealtime() - cronometro.getBase();
-        ritmelapsedSeconds = (ritmelapsedMillis*0.001) /1;
-        ritmelapsedMinutes = (ritmelapsedSeconds*1) /60;
+        cronometro.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener()
+        {
+            @Override
+            public void onChronometerTick(Chronometer chronometer)
+            {
+                ritmelapsedMillis = SystemClock.elapsedRealtime() - cronometro.getBase();
+                ritmelapsedSeconds = (ritmelapsedMillis*0.001) /1;
+                ritmelapsedMinutes = (ritmelapsedSeconds*1) /60;
 
-        //si en 1 metro hice tantos minutos, en 10, x
-        ritmo=(10*ritmelapsedMinutes)/1;
+                //si en 1 metro hice tantos minutos, en 10, x
+                ritmo=(10*ritmelapsedMinutes)/1;
 
-        TextView txtvritmo = actualV.findViewById(R.id.textvritmo);
-        txtvritmo.setText("");
-        txtvritmo.setText("Ritmo: "+ritmo+" minutos cada 10 metros");
+                TextView txtvritmo = actualV.findViewById(R.id.textvritmo);
+                txtvritmo.setText("");
+                txtvritmo.setText("Ritmo: "+ritmo+" minutos cada 10 metros");
 
-        if(ritmelapsedMinutes>=10){
-            acumuladorPromedio+=ritmo;
-        }
+                if(ritmelapsedMinutes>=10){
+                    acumuladorPromedio+=ritmo;
+                }
+            }
+        });
+
 
         Button botons=actualV.findViewById(R.id.bstartcron);
         botons.setOnClickListener(new View.OnClickListener() {
@@ -185,7 +193,8 @@ public class RunningFragment extends Fragment{
                 }
 
                 if(lastLocation!=null) {
-                    if (isBetterLocation(lastLocation, firstLocation) && calcGrados(firstLocation.getLatitude(), firstLocation.getLongitude(), lastLocation.getLatitude(), lastLocation.getLongitude()) > 45) {
+                    //if (isBetterLocation(lastLocation, firstLocation) && calcGrados(firstLocation.getLatitude(), firstLocation.getLongitude(), lastLocation.getLatitude(), lastLocation.getLongitude()) > 45) {
+                    if (isBetterLocation(lastLocation, firstLocation) && Math.abs(firstLocation.getBearing() - lastLocation.getBearing()) >= 45) {
                         addElementRaceBestLocations(lastLocation);
                     } else {
                         //addElementRaceBestLocations(firstLocation);
@@ -218,16 +227,30 @@ public class RunningFragment extends Fragment{
     }
 
     //Devuelve la distancia recorrida entre dos puntos
+    //utilizando la fórmula de Havershine
     private double measure(Location l1, Location l2) {  // generally used geo measurement function
-        double R = 6378.137; // Radius of earth in KM
+        //La fórmula supone que la tierra es perfectamente redonda
+        //como no estamos en un plano, no se puede utilizar el método de Pitágoras
+        //Radio equivolumen de la Tierra
+        double R = 6378.137;
+
+        //Calculo la diferencia de latitud, y la de longitud
+        // entre los dos puntos, pasando cada latitud y longitud a radianes, previamente
+        //ya que la latitud y la longitud están en grados,minutos,segundos
         double dLat = l1.getLatitude() * Math.PI / 180 - l1.getLatitude() * Math.PI / 180;
         double dLon = l2.getLongitude() * Math.PI / 180 - l1.getLongitude() * Math.PI / 180;
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+
+        //la fórmula de havershine
+        double a = Math.pow(Math.sin(dLat / 2), 2) +
                 Math.cos(l1.getLatitude() * Math.PI / 180) * Math.cos(l2.getLatitude() * Math.PI / 180) *
-                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double d = R * c;
-        return d * 1000; // meter
+                        Math.pow(Math.sin(dLon / 2), 2);
+
+        //luego, en la variable c para sacar la distancia final
+        //double c = 2 * R *Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double c = 2 * R * Math.asin(Math.sqrt(a));
+
+        //paso la distancia obtenida a metros
+        return c * 1000; // meter
     }
 
     private void grabarDatos(){
@@ -302,6 +325,7 @@ public class RunningFragment extends Fragment{
         raceBestLocations.add(element);
     }
 
+    /*
     //Calcula la diferencia de grados entre dos puntos
     protected double calcGrados(double startLat, double startLng, double endLat, double endLng){
         double longitude1 = startLng;
@@ -314,7 +338,7 @@ public class RunningFragment extends Fragment{
 
         return (Math.toDegrees(Math.atan2(y, x))+360)%360;
     }
-
+    */
     //private static final int TWO_MINUTES = 1000 * 60 * 2;
     private static final int MINUTES = 1000 * 60 * 2;
 
