@@ -29,7 +29,7 @@ public class DetailActivity extends AppCompatActivity implements RunningFragment
         txtv3.setText("Distancia recorrida: "+actualData.getDistancia()+" metros");
 
         TextView txtv4=findViewById(R.id.tvritmo);
-        txtv4.setText("Ritmo promedio: "+actualData.getRitmo()+" minutos cada 10 metros");
+        txtv4.setText("Ritmo promedio: "+actualData.getRitmo()+" segundos cada 1 km");
 
         Button boton1 = findViewById(R.id.buttonmaprun);
         boton1.setOnClickListener(new View.OnClickListener() {

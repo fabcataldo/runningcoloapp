@@ -15,11 +15,11 @@
     <string name="titulo_boton_reset_cronometro">Reiniciar</string>
     <string name="titulo_boton_pause_cronometro">Pausar</string>
     <string name="titulo_boton_splash">IR A PANTALLA DE INICIO!</string>
-    <string name="titulo_boton_pantalla_registro_go">GO!</string>
+    <string name="titulo_boton_pantalla_registro_go">Empezá ya!</string>
     <string name="titulo_boton_celda_detalle">Ver en detalle</string>
     <string name="titulo_boton_map_race_detail">Ver el recorrido realizado en un mapa</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="facebook_app_id">681499435567104</string>
 </resources>

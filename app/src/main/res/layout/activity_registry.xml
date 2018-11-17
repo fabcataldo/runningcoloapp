@@ -4,30 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@drawable/fondoasd"
 
+    android:orientation="vertical"
     tools:context=".com.iua.fabio.runningcoloapp.actividades.SplashActivity">
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:text="@string/titulo_boton_pantalla_registro_go"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        tools:textFontWeight="Arial" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:orientation="horizontal">
 
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="@string/titulo_boton_pantalla_registro_go" />
-
         <FrameLayout
             android:id="@+id/audiocontenedor"
             android:layout_width="300dp"
-            android:layout_height="400dp"
-
-            >
-        </FrameLayout>
+            android:layout_height="600dp"
+            android:background="@drawable/fondoasd"></FrameLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton"
@@ -36,12 +39,13 @@
             android:layout_gravity="right"
             android:clickable="true"
             app:srcCompat="@android:drawable/btn_star_big_on" />
-
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/contenedor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"></FrameLayout>
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        ></FrameLayout>
 </LinearLayout>

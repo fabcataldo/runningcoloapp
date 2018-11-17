@@ -12,7 +12,9 @@
         android:id="@+id/tvrace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="xx" />
+        android:text="xx"
+        android:textColor="#000"
+        />
 
     
     <Button

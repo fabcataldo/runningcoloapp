@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".com.iua.fabio.runningcoloapp.actividades.DetailActivity"
     android:orientation="vertical"
+    android:background="@drawable/fondoasd"
+    android:textColor="#ff0000"
     >
 
     <TextView
@@ -14,6 +16,7 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textSize="20dp"
+        android:textColor="#000"
         />
 
     <TextView
@@ -22,6 +25,7 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textSize="20dp"
+        android:textColor="#000"
         />
 
     <TextView
@@ -30,6 +34,7 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textSize="20dp"
+        android:textColor="#000"
         />
 
     <TextView
@@ -38,6 +43,7 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textSize="20dp"
+        android:textColor="#000"
         />
 
     <Button
