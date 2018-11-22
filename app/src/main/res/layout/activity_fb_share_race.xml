@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".com.iua.fabio.runningcoloapp.actividades.FileNotFoundFromListActivity"
     android:orientation="vertical"
+    android:background="@drawable/fondoasd"
     >
-
 
     <TextView
         android:id="@+id/textView"
@@ -16,6 +16,7 @@
         android:layout_gravity="center"
         android:text="Querés publicar tu última carrera en Facebook?"
         android:textSize="30dp"
+        android:textColor="#000"
         />
 
     <Button

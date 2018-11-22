@@ -69,10 +69,8 @@ public class RunningFragment extends Fragment{
     private double ritmelapsedSeconds;
     private double ritmelapsedMinutes;
     private double distancia;
-    private double acumuladorPromedio;
     private double ritmoPromedio;
     private long ritmodistancia;
-    private long acumuladorDiezMetrosRitmo;
     private String fecha;
     private double ritmoVelocProm;
 
@@ -121,6 +119,9 @@ public class RunningFragment extends Fragment{
         raceBestLocations = new ArrayList<Location>();
         mFusedProviderLocationClient=LocationServices.getFusedLocationProviderClient(this.getActivity());
         createLocationRequest();
+
+
+
         final TextView txtvritmo = actualV.findViewById(R.id.textvritmo);
 
         Button botons=actualV.findViewById(R.id.bstartcron);
@@ -177,35 +178,36 @@ public class RunningFragment extends Fragment{
                 }
 
                 if(lastLocation!=null) {
-                    //if (isBetterLocation(lastLocation, firstLocation) && calcGrados(firstLocation.getLatitude(), firstLocation.getLongitude(), lastLocation.getLatitude(), lastLocation.getLongitude()) > 45) {
                     if (isBetterLocation(lastLocation, firstLocation) && Math.abs(firstLocation.getBearing() - lastLocation.getBearing()) >= 45) {
                         addElementRaceBestLocations(lastLocation);
-                    } else {
-                        //addElementRaceBestLocations(firstLocation);
                     }
 
                     ritmelapsedMillis = SystemClock.elapsedRealtime() - cronometro.getBase();
                     ritmelapsedSeconds = (ritmelapsedMillis*0.001) /1;
-                    //ritmelapsedMinutes =Math.round((ritmelapsedSeconds*1) /60 * 100d) / 100d;
+                    ritmelapsedMinutes =Math.round((ritmelapsedSeconds*1) /60 * 100d) / 100d;
 
                     //ya al tener dos puntos, calculo la veloc prom
                     //entre esos dos puntos
                     ritmodistancia+=measure(firstLocation,lastLocation);
-                    ritmoVelocProm=ritmodistancia/ritmelapsedSeconds;
+                    ritmoVelocProm=ritmodistancia/ritmelapsedMinutes;
 
                     //y luego, el ritmo en ese momento va a ser
                     //la distancia fija que yo pongo (1000 m o sea 1km)
                     // dividida la veloc prom (variable)
-                    //los cálculos son en m/s pero muestro km/s
+                    //los cálculos son en m/min pero muestro km/min
                     ritmo=Math.round((1000/ritmoVelocProm) * 100d) / 100d;
-                    txtvritmo.setText("Ritmo: "+ritmo+" segundos cada 1 kilómetro");
+                    txtvritmo.setText("Ritmo: "+ritmo+" minutos cada 1 km");
 
                     setFirstLocation(null);
                     setLastLocation(null);
                 }
             }
         };
-
+        
+        //hago esto (de llamar al startLoc... ACÁ, ya que, he notado, en las pruebas que hice
+        //que los Locations no los agarraba, luego, cuando iba a ver los detalles de
+        //la carrera que grabé, se clavaba la app ya que no se habia grabado ningun punto
+        startLocationUpdates();
 
         return actualV;
     }
@@ -243,7 +245,7 @@ public class RunningFragment extends Fragment{
         double dLat = l1.getLatitude() * Math.PI / 180 - l1.getLatitude() * Math.PI / 180;
         double dLon = l2.getLongitude() * Math.PI / 180 - l1.getLongitude() * Math.PI / 180;
 
-        //la función de havershine: ( havershine(d/R) )
+        //la función de havershine: ( havershine(d/R) ) = h
         //siendo d, la distancia entre los dos puntos
         //R es el radio que estamos utilizando, el de la Tierra
         double a = Math.pow(Math.sin(dLat / 2), 2) +
@@ -253,7 +255,10 @@ public class RunningFragment extends Fragment{
         //luego, en la variable c para sacar la distancia final
         //fórmula de havershine
         //double c = 2 * R *Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        //corrijo el cálculo de la distancia,debajo
+        //corrijo el cálculo de la distancia, debajo ya que, segun Wikipedia:
+        //"a veces, la fórmula DE ABAJO se escribe en términos de la función arcotangente
+        //(como está comentado arriba) pero esta adolece de problemas numéricos similares
+        //con valores cerca de h = 1"
         double c = 2 * R * Math.asin(Math.sqrt(a));
 
         //paso la distancia obtenida a metros
@@ -280,7 +285,8 @@ public class RunningFragment extends Fragment{
         //el ritmo promedio va a ser los metros que recorri / los segundos que hice en toda la race
         //redondeo el cálculo final con dos decimales
         //por eso la multiplicación, la división, y el 100d
-        ritmoPromedio=Math.round(distancia/elapsedSeconds * 100d) / 100d;
+        //PASO LA DISTANCIA A KM, para luego hacer el ritmo prom: km/min
+        ritmoPromedio=Math.round((distancia/1000)/elapsedMinutes * 100d) / 100d;
 
         Calendar c2 = new GregorianCalendar();
         String dia = Integer.toString(c2.get(Calendar.DATE));
@@ -359,7 +365,6 @@ public class RunningFragment extends Fragment{
     //utiliza también la precisión de las dos localizaciones, para ver cuál de las dos es mejor
     //tiene en cuenta la precisión, y si vienen del mismo provider (wifi o datos, o gps)
     protected boolean isBetterLocation(Location location, Location currentBestLocation) {
-        //System.out.println("ENTRO ACAAA");
         if (currentBestLocation == null) {
             // A new location is always better than no location
             return true;
@@ -374,8 +379,8 @@ public class RunningFragment extends Fragment{
         // If it's been more than two minutes since the current location, use the new location
         // because the user has likely moved
         if (isSignificantlyNewer) {
-
             return true;
+
             // If the new location is more than two minutes older, it must be worse
         } else if (isSignificantlyOlder) {
             return false;
@@ -393,7 +398,6 @@ public class RunningFragment extends Fragment{
 
         // Determine location quality using a combination of timeliness and accuracy
         if (isMoreAccurate) {
-            //System.out.println("EL LAST LOCATION FUNCAAAA");
             return true;
         } else if (isNewer && !isLessAccurate) {
             return true;

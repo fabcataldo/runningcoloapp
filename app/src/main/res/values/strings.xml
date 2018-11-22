@@ -9,6 +9,7 @@
     <string name="title_activity_list_cell">ListCellActivity</string>
     <string name="titulo_file_not_found_from_list_activity">Error inesperado!</string>
     <string name="titulo_audio_detail_activity">Reproducir canción seleccionada</string>
+    <string name="titulo_fb_share_race_activity">Compartir en Facebook tu última carrera</string>
 
     <string name="titulo_boton_start_cronometro">Comenzar</string>
     <string name="titulo_boton_stop_cronometro">Detener</string>

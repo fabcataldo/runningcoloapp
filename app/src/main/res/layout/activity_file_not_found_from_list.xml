@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".com.iua.fabio.runningcoloapp.actividades.FileNotFoundFromListActivity"
     android:orientation="vertical"
+    android:background="@drawable/fondoasd"
     >
 
     <TextView
@@ -14,8 +15,8 @@
         android:layout_height="wrap_content"
         android:text="No hay carreras registradas. Inicie una, volviendo a la pantalla
                         anterior!!"
-        android:textSize="20dp"
-        />
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/boton_volver_a_registry_activity"

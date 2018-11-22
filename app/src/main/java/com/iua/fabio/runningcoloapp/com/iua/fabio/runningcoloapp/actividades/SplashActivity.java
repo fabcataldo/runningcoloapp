@@ -70,6 +70,12 @@ public class SplashActivity extends AppCompatActivity {
             //que pongo como parámetro en el objeto Intent
             Intent intent = new Intent(this, RegistryActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            //El pendingIntent, nos dice que, va a estar en pendiente la ejecución de la
+            // actividad "RegistryActivity", y no va a correr hasta que no reaccionemos
+            // con "un toque" la notificación,
+            // tengo que guardar en algún lugar la acción a tomar, una vez que reaccione a la
+            //notificación, y a donde la guardo? en el objeto pendingIntent
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
             //creo la notificación, de forma básica
@@ -111,6 +117,9 @@ public class SplashActivity extends AppCompatActivity {
 
         String lastDateRace = listRaces.get(listRaces.size() - 1).getFecha();
 
+        //uso el objeto "formato" para usar el parser, que te pasa la fecha en String
+        //a un objeto de tipo Date, que necesitamos para restar la fecha actual
+        //con la fecha de la última carrera (almacenado en lastDateRace)
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date fechaDate = formato.parse(lastDateRace);
 
@@ -124,7 +133,8 @@ public class SplashActivity extends AppCompatActivity {
         //devuelve la diferencia en milisegundos
         long diferencia = fechaFinalMs - fechaInicialMs;
 
-        //paso el resultado anterior de milisegundos a segundos, luego a minutos, y luego a días
+        //paso el resultado anterior de milisegundos a segundos, luego a minutos,
+        //luego a hora, y luego a días
         double dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
 
         return ( (int) dias);

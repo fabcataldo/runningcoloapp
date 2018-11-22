@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".com.iua.fabio.runningcoloapp.actividades.AudioDetailActivity">
+    tools:context=".com.iua.fabio.runningcoloapp.actividades.AudioDetailActivity"
+    android:background="@drawable/audiofond"
+    >
 
 
     <TextView
@@ -17,6 +19,7 @@
         android:text="asd "
         android:textSize="30dp"
         android:textAlignment="center"
+        android:textColor="#00f"
         />
 
 

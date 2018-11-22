@@ -48,9 +48,7 @@ public class AudioListFragment extends Fragment {
     private ArrayList<String> arrayList;
     private ListView listView;
     private ArrayList<SongData> songlist;
-    private ArrayAdapter<String> adapter;
     private Context ctx;
-    private Uri resSongID;
 
     private OnFragmentInteractionListener mListener;
 
@@ -90,8 +88,11 @@ public class AudioListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         actualView = inflater.inflate(R.layout.fragment_audio_list, container, false);
+
         listView = (ListView) actualView.findViewById(R.id.audiolistview);
         ctx = this.getContext();
+
+        //acá pedimos permiso de escritura/lectura de la memoria externa, si es que está presente
         if (ContextCompat.checkSelfPermission(this.getContext()
                 , Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(),
@@ -121,7 +122,17 @@ public class AudioListFragment extends Fragment {
 
     public void getMusic(){
         ContentResolver contentResolver = getActivity().getContentResolver();
+
+        //Uri, objeto que sirbe para guardar una referencia a una dirección determinada
+        //utilizo la Media Store, para, desde la memoria externa, obtener una lista de
+        // todo el contenido de audio de la misma
         Uri songUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+
+        //el objeto songcursosr, sirve como indexador de una lista, la que sea,
+        //obteniendo como dirección de inicio lo que diga SongUri
+        //sirve también, por ej, para indexar un set de respuesta de lo que consultemos
+        //a una bd
+        //una idea muy similar tiene JSONReader
         Cursor songcursor = contentResolver.query(songUri, null, null, null, null);
 
         if (songcursor != null && songcursor.moveToFirst()) {
@@ -144,6 +155,9 @@ public class AudioListFragment extends Fragment {
         }
     }
 
+
+    //metodo que nos sirve para chequear, lo que pase cuando obtenemos el permiso de escritura
+    //o lectura de la memoria externa
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
         switch(requestCode){
             case MY_PERMISSION_REQUEST:{

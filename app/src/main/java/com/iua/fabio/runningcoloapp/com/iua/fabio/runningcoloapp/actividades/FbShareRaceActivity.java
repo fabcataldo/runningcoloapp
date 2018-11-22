@@ -20,6 +20,7 @@ public class FbShareRaceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fb_share_race);
+        setTitle(R.string.titulo_fb_share_race_activity);
         Button bsi=findViewById(R.id.boton_yes_fb_share_race_act);
         Button bno=findViewById(R.id.boton_no_fb_share_race_act);
 
