@@ -194,7 +194,6 @@ public class RunningFragment extends Fragment{
                     //y luego, el ritmo en ese momento va a ser
                     //la distancia fija que yo pongo (1000 m o sea 1km)
                     // dividida la veloc prom (variable)
-                    //los cálculos son en m/min pero muestro km/min
                     ritmo=Math.round((1000/ritmoVelocProm) * 100d) / 100d;
                     txtvritmo.setText("Ritmo: "+ritmo+" minutos cada 1 km");
 
@@ -232,7 +231,7 @@ public class RunningFragment extends Fragment{
 
     //Devuelve la distancia recorrida entre dos puntos
     //utilizando la fórmula de Havershine
-    private double measure(Location l1, Location l2) {  // generally used geo measurement function
+    private double measure(Location l1, Location l2) {
         //La fórmula supone que la tierra es perfectamente redonda
         //como no estamos en un plano, no se puede utilizar el método de Pitágoras
         //Radio equivolumen de la Tierra, está en km, al final, después de calcular todo

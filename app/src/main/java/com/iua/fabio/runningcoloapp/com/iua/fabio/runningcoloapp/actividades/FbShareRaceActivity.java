@@ -54,6 +54,7 @@ public class FbShareRaceActivity extends AppCompatActivity {
                 "\nDistancia recorrida: " + distancia + " metros" +
                 "\n\nMúsica motivacional por default, provista por la aplicación, " +
                 "debajo se encuentra un link de Youtube";
+
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
 
