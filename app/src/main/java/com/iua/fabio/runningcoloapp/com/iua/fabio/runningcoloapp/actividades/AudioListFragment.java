@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,9 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.iua.fabio.runningcoloapp.R;
 import com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.modelo.SongData;
@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * Use the {@link AudioListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AudioListFragment extends Fragment {
+public class AudioListFragment extends Fragment{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -49,8 +49,10 @@ public class AudioListFragment extends Fragment {
     private ListView listView;
     private ArrayList<SongData> songlist;
     private Context ctx;
-
     private OnFragmentInteractionListener mListener;
+    private AudioCustomListAdapter acla;
+    private SongData actualData;
+    private SongData nextActualData;
 
     public AudioListFragment() {
         // Required empty public constructor
@@ -107,6 +109,37 @@ public class AudioListFragment extends Fragment {
             doStuff();
         }
 
+        listView.setItemsCanFocus(true);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                actualData = songlist.get(position);
+                final Uri resSongID = Uri.parse(actualData.getSong_location());
+
+                int positionplus=position+1;
+                nextActualData=songlist.get(positionplus);
+                final Uri nextResSongID = Uri.parse(nextActualData.getSong_location());
+
+                MPSingleton.getInstance().prepareMedia(getContext(),resSongID);
+                if(!MPSingleton.getInstance().get_mp().isPlaying()){
+                    MPSingleton.getInstance().play();
+                }
+                else{
+                    MPSingleton.getInstance().pauseSong();
+                }
+
+                MPSingleton.getInstance().get_mp().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        MPSingleton.getInstance().stopSong();
+                        MPSingleton.getInstance().prepareMedia(ctx.getApplicationContext(), nextResSongID);
+                        MPSingleton.getInstance().play();
+                    }
+                });
+            }
+        });
 
         return actualView;
     }
@@ -115,7 +148,7 @@ public class AudioListFragment extends Fragment {
         arrayList = new ArrayList<>();
         songlist = new ArrayList<SongData>();
         getMusic();
-        AudioCustomListAdapter acla=new AudioCustomListAdapter(ctx);
+        acla=new AudioCustomListAdapter(ctx);
         acla.setLcd(songlist);
         listView.setAdapter(acla);
     }
@@ -197,6 +230,8 @@ public class AudioListFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this

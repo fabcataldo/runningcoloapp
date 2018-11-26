@@ -120,16 +120,22 @@ public class RunningFragment extends Fragment{
         mFusedProviderLocationClient=LocationServices.getFusedLocationProviderClient(this.getActivity());
         createLocationRequest();
 
-
-
         final TextView txtvritmo = actualV.findViewById(R.id.textvritmo);
 
-        Button botons=actualV.findViewById(R.id.bstartcron);
+        final Button botons=actualV.findViewById(R.id.bstartcron);
         botons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startLocationUpdates();
-                comenzar(v);
+                if(!isCorriendo){
+                    botons.setText("Pausar");
+                    startLocationUpdates();
+                    comenzar(v);
+                }
+                else{
+                    botons.setText("Continuar");
+                    stopLocationUpdates();
+                    pausar(v);
+                }
             }
         });
 
@@ -142,24 +148,6 @@ public class RunningFragment extends Fragment{
             }
         });
 
-        Button botonpause=actualV.findViewById(R.id.bpausecron);
-        botonpause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopLocationUpdates();
-                pausar(v);
-            }
-        });
-
-        Button botonres=actualV.findViewById(R.id.bresetcron);
-        botonres.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopLocationUpdates();
-                resetear(v);
-                startLocationUpdates();
-            }
-        });
 
         mLocationCallback = new LocationCallback() {
             public void onLocationResult(LocationResult location) {
@@ -195,7 +183,8 @@ public class RunningFragment extends Fragment{
                     //la distancia fija que yo pongo (1000 m o sea 1km)
                     // dividida la veloc prom (variable)
                     ritmo=Math.round((1000/ritmoVelocProm) * 100d) / 100d;
-                    txtvritmo.setText("Ritmo: "+ritmo+" minutos cada 1 km");
+                    String sritmo=String.format(":%.2f", ritmo);
+                    txtvritmo.setText("Ritmo: "+sritmo+" minutos cada 1 km");
 
                     setFirstLocation(null);
                     setLastLocation(null);
@@ -329,11 +318,6 @@ public class RunningFragment extends Fragment{
             pauseOffset=SystemClock.elapsedRealtime()-cronometro.getBase();
             isCorriendo=false;
         }
-    }
-
-    public void resetear(View v){
-        cronometro.setBase(SystemClock.elapsedRealtime());
-        pauseOffset=0;
     }
 
 

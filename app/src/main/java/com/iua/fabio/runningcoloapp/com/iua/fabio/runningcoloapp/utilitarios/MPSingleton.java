@@ -18,6 +18,7 @@ public class MPSingleton {
     }
 
     public static MPSingleton getInstance(){
+
         if(_instance==null){
             _instance=new MPSingleton();
         }
@@ -26,7 +27,7 @@ public class MPSingleton {
     }
 
     public void prepareMedia(Context mContext, Uri res){
-        if(firstSong.getPath()=="xx" || firstSong!=res) {
+        if(firstSong.getPath().equals("xx") || !firstSong.getPath().equals(res.getPath()) ) {
             getInstance().get_mp().reset();
             firstSong=res;
 
@@ -43,7 +44,7 @@ public class MPSingleton {
         }
 
         currentPos=getInstance().get_mp().getCurrentPosition();
-        if(firstSong==res && getInstance().get_mp().isPlaying()){
+        if(firstSong.getPath().equals(res.getPath()) && getInstance().get_mp().isPlaying()){
             getInstance().get_mp().seekTo(currentPos);
         }
     }
