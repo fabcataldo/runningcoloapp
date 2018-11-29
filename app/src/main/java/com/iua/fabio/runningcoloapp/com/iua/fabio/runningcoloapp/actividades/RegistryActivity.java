@@ -15,16 +15,26 @@ import com.iua.fabio.runningcoloapp.R;
 
 //public class RegistryActivity extends FragmentActivity {
 public class RegistryActivity extends AppCompatActivity implements RunningFragment.OnFragmentInteractionListener, AudioListFragment.OnFragmentInteractionListener {
-    Toolbar toolbar;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registry);
         setTitle(R.string.titulo_registry_activity);
+
         toolbar=findViewById(R.id.toolbar);
+
+        //lo de abajo es para habilitar la recepción de eventos de la toolbar
+        //dependiendo de los botoncitos que haya
         setSupportActionBar(toolbar);
+
+        //preparo el objeto ActionBar para hacer utilizable la toolbar
         ActionBar ab=getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+
+        //lo de abajo es para habilitar (o no) la flechita de volver atrás, en el toolbar
+        ab.setDisplayHomeAsUpEnabled(false);
+
+        //el color del titulo de la toolbar
         setTitleColor(Color.WHITE);
 
         RunningFragment rf = new RunningFragment();
@@ -33,7 +43,8 @@ public class RegistryActivity extends AppCompatActivity implements RunningFragme
         AudioListFragment alf = new AudioListFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.audiocontenedor, alf);
 
-
+        //PARA DESAPARECER el botoncito de GO, o empezar
+        //y mostrar los fragments
         final Button boton_start = findViewById(R.id.button2);
         boton_start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,14 +56,17 @@ public class RegistryActivity extends AppCompatActivity implements RunningFragme
         });
     }
 
+    //inflo el layout del menu, para la toolbar
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
+    //dependiendo del botoncito que presione, del menú
+    //es la acción que se ve va a ejecutar
     public boolean onOptionsItemSelected(MenuItem menuItem){
         switch(menuItem.getItemId()){
-            case R.id.search:
+            case R.id.lista_de_carreras:
                 goToListActivity();
                 return true;
             default:

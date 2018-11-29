@@ -2,6 +2,7 @@ package com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.actividades;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -13,8 +14,11 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.iua.fabio.runningcoloapp.R;
@@ -72,7 +76,7 @@ public class DetailMapRunFragment extends Fragment implements OnMapReadyCallback
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
 
-        Polyline polylines = mMap.addPolyline(new PolylineOptions().clickable(false).add(coords));
+        //Polyline polylines = mMap.addPolyline(new PolylineOptions().clickable(false).add(coords));
 
         //si no tenés los permisos, pedilos
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -94,8 +98,16 @@ public class DetailMapRunFragment extends Fragment implements OnMapReadyCallback
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
         mMap.addMarker(new MarkerOptions().position(coords[0]).title("Punto de inicio"));
-        mMap.addMarker(new MarkerOptions().position(coords[coords.length-1]).title("Punto final"));
+        mMap.addMarker(new MarkerOptions().position(coords[coords.length-1])
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                .title("Punto final"));
+
         mMap.moveCamera(CameraUpdateFactory.newLatLng(coords[0]));
+
+        //PolygonOptions po=new PolygonOptions().add(coords).strokeColor(Color.CYAN);
+        PolylineOptions po2=new PolylineOptions().clickable(false).add(coords);
+        //mMap.addPolygon(po);
+        mMap.addPolyline(po2);
 
         //hago zoom, el segundo argumento es qué tanto zoom quiero hacer, del objeto
         //LatLng, del primer argumento
