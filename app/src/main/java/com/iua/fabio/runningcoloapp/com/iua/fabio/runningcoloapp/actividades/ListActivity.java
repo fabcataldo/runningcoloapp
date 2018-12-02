@@ -11,8 +11,6 @@ import com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.utilitarios.Cus
 import java.io.FileNotFoundException;
 
 public class ListActivity extends AppCompatActivity{
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,10 +27,8 @@ public class ListActivity extends AppCompatActivity{
         lista.setAdapter(cla);
     }
 
-
     private void GoToFileNotFoundFromListActivity(){
         Intent intento=new Intent(this, FileNotFoundFromListActivity.class);
         startActivity(intento);
     }
-
 }

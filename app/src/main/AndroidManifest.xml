@@ -30,7 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".com.iua.fabio.runningcoloapp.actividades.ListActivity" />
+
+        <!-- Si pongo android:noHistory=true, con eso le estoy diciendo a Android que no
+        mantenga a la actividad, en la que estoy habilitando este atributo, en memoria-->
+        <activity android:name=".com.iua.fabio.runningcoloapp.actividades.ListActivity"
+            android:noHistory="true"
+            />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -77,7 +82,9 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".com.iua.fabio.runningcoloapp.actividades.FileNotFoundFromListActivity" />
+        <!-- Si pongo android:noHistory=true, con eso le estoy diciendo a Android que no
+        mantenga a la actividad, en la que estoy habilitando este atributo, en memoria-->
+        <activity android:name=".com.iua.fabio.runningcoloapp.actividades.FileNotFoundFromListActivity" android:noHistory="true"/>
         <activity android:name=".com.iua.fabio.runningcoloapp.actividades.AudioListCell" />
         <activity android:name=".com.iua.fabio.runningcoloapp.actividades.FbShareRaceActivity"></activity>
     </application>

@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -143,6 +144,44 @@ public class JSONSingleton {
 
     //------------------------------------------------------------------------------------
 
+    public void deleteAObjFromJSON ( String pathJSON, int posObj, Context ctxt) throws JSONException, IOException {
+        File myfile= new File(ctxt.getFilesDir()+pathJSON);
+        JSONArray raceDataJSON=new JSONArray();
+
+        FileInputStream fis=new FileInputStream(ctxt.getFilesDir()+pathJSON);
+        getInstancia().setIn(fis);
+        getInstancia().setRaceDataList(getJsonStream());
+
+        //UNA VEZ QUE OBTENGO TODOS LOS OBJETOS DEL JSON, VOY LLENANDO EL NUEVO
+        //JSONARRAY que va a tener los objetos del json
+        //después le agrego el objeto nuevo
+        JSONArray coordsArrObjsJSON=new JSONArray();
+        getInstancia().getRaceDataList().remove(posObj);
+
+        for(int i=0;i<getInstancia().getRaceDataList().size();i++){
+            JSONObject raceDataElement=new JSONObject();
+            raceDataElement.put("fecha", getInstancia().getRaceDataList().get(i).getFecha());
+
+            for(int j=0;j<getInstancia().getRaceDataList().get(i).getCoords().size();j++){
+                JSONObject coordsJSONObj=new JSONObject();
+                coordsJSONObj.put("Latitud", getInstancia().getRaceDataList().get(i).getCoords().get(j).getLatitud());
+                coordsJSONObj.put("Longitud", getInstancia().getRaceDataList().get(i).getCoords().get(j).getLongitud());
+                coordsArrObjsJSON.put(j, coordsJSONObj);
+            }
+            raceDataElement.put("coords", coordsArrObjsJSON);
+            raceDataElement.put("distancia", getInstancia().getRaceDataList().get(i).getDistancia());
+            raceDataElement.put("duracion", getInstancia().getRaceDataList().get(i).getDuracion());
+            raceDataElement.put("ritmo", getInstancia().getRaceDataList().get(i).getRitmo());
+            raceDataJSON.put(raceDataElement);
+        }
+
+        FileOutputStream fos =  new FileOutputStream(myfile, false);
+
+        fos.write(raceDataJSON.toString().getBytes());
+        fos.flush();
+        fos.close();
+
+    }
     public void writeToJSON(String pathJSON, String fecha, double[][] coords, double duracion, double ritmo, double distancia, Context ctxt, Activity act) throws IOException, JSONException {
         File myfile= new File(ctxt.getFilesDir()+pathJSON);
         JSONArray raceDataJSON=new JSONArray();

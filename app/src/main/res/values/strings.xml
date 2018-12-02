@@ -18,6 +18,7 @@
     <string name="titulo_boton_splash">IR A PANTALLA DE INICIO!</string>
     <string name="titulo_boton_pantalla_registro_go">Empezá ya!</string>
     <string name="titulo_boton_celda_detalle">Ver en detalle</string>
+    <string name="titulo_boton_celda_borrar">Borrar</string>
     <string name="titulo_boton_map_race_detail">Ver el recorrido realizado en un mapa</string>
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -11,7 +11,10 @@ import android.widget.TextView;
 
 import com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.actividades.DetailActivity;
 import com.iua.fabio.runningcoloapp.R;
+import com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.actividades.ListActivity;
 import com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.modelo.RaceData;
+
+import org.json.JSONException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -61,7 +64,7 @@ public class CustomListAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         //uso el inflater para obtener una referencia a la view de las celdas
         if (convertView==null){
             convertView= LayoutInflater.from(cont).inflate(R.layout.activity_list_cell, parent, false);
@@ -79,7 +82,26 @@ public class CustomListAdapter extends BaseAdapter{
                 }
             });
 
+            Button boton2 = convertView.findViewById(R.id.buttoneliminarregistro);
+            boton2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        JSONSingleton.getInstancia().deleteAObjFromJSON("/race_data.json", position, cont);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    recargarListActivity();
+                }
+            });
         return convertView;
+    }
+
+    public void recargarListActivity(){
+        Intent intento1 = new Intent(cont, ListActivity.class);
+        cont.startActivity(intento1);
     }
 
     public void GoToDetailActivity(RaceData raceData){
