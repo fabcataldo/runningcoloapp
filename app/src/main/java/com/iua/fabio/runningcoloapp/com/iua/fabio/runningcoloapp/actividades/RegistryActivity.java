@@ -24,11 +24,11 @@ public class RegistryActivity extends AppCompatActivity implements RunningFragme
 
         toolbar=findViewById(R.id.toolbar);
 
-        //lo de abajo es para habilitar la recepción de eventos de la toolbar
-        //dependiendo de los botoncitos que haya
+        //Este método establece la barra de herramientas como la barra de app de la actividad.
         setSupportActionBar(toolbar);
 
-        //preparo el objeto ActionBar para hacer utilizable la toolbar
+        //llamo al método getSupportBar() para utilizar sus métodos
+        //y poder customizar mi barra
         ActionBar ab=getSupportActionBar();
 
         //lo de abajo es para habilitar (o no) la flechita de volver atrás, en el toolbar
