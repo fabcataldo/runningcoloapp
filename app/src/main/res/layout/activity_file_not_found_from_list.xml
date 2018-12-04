@@ -13,10 +13,9 @@
         android:id="@+id/text_view_no_hay_carreras"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No hay carreras registradas. Inicie una, volviendo a la pantalla
-                        anterior!!"
+        android:text="No hay carreras registradas. Inicie una, en la pantalla de registro!!"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="20dp" />
+        android:textSize="30dp" />
 
     <Button
         android:id="@+id/boton_volver_a_registry_activity"
@@ -24,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:text="Volver a la pantalla de registro"
+        android:text="Ir a la pantalla de registro"
 
         />
 

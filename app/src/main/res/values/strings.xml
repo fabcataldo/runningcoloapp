@@ -10,6 +10,8 @@
     <string name="titulo_file_not_found_from_list_activity">Error inesperado!</string>
     <string name="titulo_audio_detail_activity">Reproducir canción seleccionada</string>
     <string name="titulo_fb_share_race_activity">Compartir en Facebook tu última carrera</string>
+    <string name="texto_coords_empty_error">Error: No se ha guardado correctamente el recorrido
+        realizado. </string>
 
     <string name="titulo_boton_start_cronometro">Comenzar</string>
     <string name="titulo_boton_stop_cronometro">Detener</string>
@@ -20,6 +22,7 @@
     <string name="titulo_boton_celda_detalle">Ver en detalle</string>
     <string name="titulo_boton_celda_borrar">Borrar</string>
     <string name="titulo_boton_map_race_detail">Ver el recorrido realizado en un mapa</string>
+    <string name="titulo_boton_volver_coords_empty_error">Volver a la pantalla de registro</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

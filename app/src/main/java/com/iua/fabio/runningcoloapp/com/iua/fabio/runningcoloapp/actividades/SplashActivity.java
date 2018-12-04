@@ -18,9 +18,11 @@ import android.widget.Button;
 
 import com.iua.fabio.runningcoloapp.R;
 import com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.modelo.RaceData;
+import com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.utilitarios.CustomListAdapter;
 import com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.utilitarios.JSONSingleton;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -32,6 +34,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public class SplashActivity extends AppCompatActivity {
+    //private boolean isRaceListEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,23 +47,28 @@ public class SplashActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
+
+        //puede pasar la excepción de abajo, cuando haya eliminado previamente todos los registros
+        //del archivo de carreras
+        } catch (ArrayIndexOutOfBoundsException aioobe){
+            goToRegistryActivity();
         }
 
         Button boton_start=findViewById(R.id.button1);
         boton_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToRegistryActivity(v);
+                goToRegistryActivity();
             }
         });
     }
 
-    private void goToRegistryActivity(View view){
+    private void goToRegistryActivity(){
         Intent i = new Intent(this, RegistryActivity.class);
         startActivity(i);
     }
 
-    private void makeAndShowNotif() throws IOException, ParseException {
+    private void makeAndShowNotif() throws IOException, ParseException, ArrayIndexOutOfBoundsException {
         int diasquehanpasado=knowAboutLastRace();
 
         //EL IF DE ABAJO SE PUEDE CAMBIAR
@@ -114,7 +122,7 @@ public class SplashActivity extends AppCompatActivity {
         JSONSingleton.getInstancia().setIn(fis);
         JSONSingleton.getInstancia().setRaceDataList(JSONSingleton.getInstancia().getJsonStream());
         List<RaceData> listRaces = JSONSingleton.getInstancia().getRaceDataList();
-
+        
         String lastDateRace = listRaces.get(listRaces.size() - 1).getFecha();
 
         //uso el objeto "formato" para usar el parser, que te pasa la fecha en String

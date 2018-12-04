@@ -21,6 +21,9 @@ public class ListActivity extends AppCompatActivity{
         CustomListAdapter cla=null;
         try {
              cla = new CustomListAdapter(this);
+             if(cla.getLcd().size()==0){
+                 GoToFileNotFoundFromListActivity();
+             }
         } catch (FileNotFoundException fnfe){
             GoToFileNotFoundFromListActivity();
         }

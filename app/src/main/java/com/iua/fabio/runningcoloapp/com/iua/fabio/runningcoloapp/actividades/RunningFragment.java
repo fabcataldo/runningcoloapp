@@ -73,6 +73,7 @@ public class RunningFragment extends Fragment{
     private long ritmodistancia;
     private String fecha;
     private double ritmoVelocProm;
+    private double[][] coordsarray;
 
     public RunningFragment() {
         // Required empty public constructor
@@ -183,7 +184,7 @@ public class RunningFragment extends Fragment{
                     //la distancia fija que yo pongo (1000 m o sea 1km)
                     // dividida la veloc prom (variable)
                     ritmo=Math.round((1000/ritmoVelocProm) * 100d) / 100d;
-                    String sritmo=String.format(":%.2f", ritmo);
+                    String sritmo=String.format("%.2f", ritmo);
                     txtvritmo.setText("Ritmo: "+sritmo+" minutos cada 1 km");
 
                     setFirstLocation(null);
@@ -214,8 +215,16 @@ public class RunningFragment extends Fragment{
             pauseOffset=0;
             isCorriendo=false;
         }
-        grabarDatos();
-        irAFbShareRaceActivity(distancia, ritmoPromedio, fecha);
+        saveCoords();
+        if(coordsarray.length<2){
+            Intent intento = new Intent(this.getContext(), CoordsEmptyError.class);
+            startActivity(intento);
+            return;
+        }
+        else{
+            grabarDatos();
+            irAFbShareRaceActivity(distancia, ritmoPromedio, fecha);
+        }
     }
 
     //Devuelve la distancia recorrida entre dos puntos
@@ -253,12 +262,8 @@ public class RunningFragment extends Fragment{
         return c * 1000;
     }
 
-    private void grabarDatos(){
-        long elapsedMillis = SystemClock.elapsedRealtime() - cronometro.getBase();
-        double elapsedSeconds = (elapsedMillis*0.001) /1;
-        double elapsedMinutes =Math.round((elapsedSeconds*1) /60 * 100d) / 100d;
-
-        double[][] coordsarray=new double[raceBestLocations.size()][2];
+    private void saveCoords(){
+        coordsarray=new double[raceBestLocations.size()][2];
 
         CoordData coords;
         distancia=0;
@@ -269,6 +274,12 @@ public class RunningFragment extends Fragment{
                 distancia+=Math.round(measure(raceBestLocations.get(i),raceBestLocations.get(i+1)) * 100d / 100d);
             }
         }
+    }
+
+    private void grabarDatos(){
+        long elapsedMillis = SystemClock.elapsedRealtime() - cronometro.getBase();
+        double elapsedSeconds = (elapsedMillis*0.001) /1;
+        double elapsedMinutes =Math.round((elapsedSeconds*1) /60 * 100d) / 100d;
 
         //el ritmo promedio va a ser los metros que recorri / los segundos que hice en toda la race
         //redondeo el cálculo final con dos decimales
@@ -292,6 +303,7 @@ public class RunningFragment extends Fragment{
         }
         fecha=dia+"/"+mes+"/"+anio+" "+hours+":"+pseudominutes;
 
+
         try {
             String pathJson="/race_data.json";
             JSONSingleton.getInstancia().writeToJSON(pathJson,fecha, coordsarray, elapsedMinutes, ritmoPromedio, distancia, this.getContext(), this.getActivity());
@@ -300,8 +312,6 @@ public class RunningFragment extends Fragment{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     private void irAFbShareRaceActivity(double distancia, double ritmoPromedio, String fecha){

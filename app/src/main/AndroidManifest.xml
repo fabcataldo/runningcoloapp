@@ -19,11 +19,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-        >
-        <!--android:theme="@style/AppTheme" VA EN APLICATION-->
-        <activity android:name=".com.iua.fabio.runningcoloapp.actividades.SplashActivity">
+        <!-- android:theme="@style/AppTheme" VA EN APLICATION -->
+        <activity android:name=".com.iua.fabio.runningcoloapp.actividades.SplashActivity"
+            android:noHistory="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,11 +32,13 @@
             </intent-filter>
         </activity>
 
-        <!-- Si pongo android:noHistory=true, con eso le estoy diciendo a Android que no
-        mantenga a la actividad, en la que estoy habilitando este atributo, en memoria-->
-        <activity android:name=".com.iua.fabio.runningcoloapp.actividades.ListActivity"
-            android:noHistory="true"
-            />
+        <!--
+        Si pongo android:noHistory=true, con eso le estoy diciendo a Android que no
+        mantenga a la actividad, en la que estoy habilitando este atributo, en memoria
+        -->
+        <activity
+            android:name=".com.iua.fabio.runningcoloapp.actividades.ListActivity"
+            android:noHistory="true" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -82,11 +85,20 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <!-- Si pongo android:noHistory=true, con eso le estoy diciendo a Android que no
-        mantenga a la actividad, en la que estoy habilitando este atributo, en memoria-->
-        <activity android:name=".com.iua.fabio.runningcoloapp.actividades.FileNotFoundFromListActivity" android:noHistory="true"/>
+        <!--
+        Si pongo android:noHistory=true, con eso le estoy diciendo a Android que no
+        mantenga a la actividad, en la que estoy habilitando este atributo, en memoria
+        -->
+        <activity
+            android:name=".com.iua.fabio.runningcoloapp.actividades.FileNotFoundFromListActivity"
+            android:noHistory="true" />
         <activity android:name=".com.iua.fabio.runningcoloapp.actividades.AudioListCell" />
-        <activity android:name=".com.iua.fabio.runningcoloapp.actividades.FbShareRaceActivity"></activity>
+        <activity android:name=".com.iua.fabio.runningcoloapp.actividades.FbShareRaceActivity"
+            android:noHistory="true"
+            />
+        <activity android:name=".com.iua.fabio.runningcoloapp.actividades.CoordsEmptyError"
+            android:noHistory="true"
+            ></activity>
     </application>
 
 </manifest>
