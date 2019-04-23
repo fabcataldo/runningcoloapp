@@ -1,6 +1,7 @@
 package com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.actividades;
 
 import android.content.Intent;
+import android.support.design.button.MaterialButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,12 +18,13 @@ public class FileNotFoundFromListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_file_not_found_from_list);
         setTitle(R.string.titulo_file_not_found_from_list_activity);
 
-        Button boton = findViewById(R.id.boton_volver_a_registry_activity);
+        MaterialButton boton = findViewById(R.id.boton_volver_a_registry_activity);
         boton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 goToRegistryActivity();
-           }
+            }
         });
+
     }
 
     private void goToRegistryActivity(){

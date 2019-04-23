@@ -2,6 +2,7 @@ package com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.actividades;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.button.MaterialButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -31,7 +32,7 @@ public class DetailActivity extends AppCompatActivity implements RunningFragment
         TextView txtv4=findViewById(R.id.tvritmo);
         txtv4.setText("Ritmo promedio: "+actualData.getRitmo()+" minutos cada 1 km");
 
-        Button boton1 = findViewById(R.id.buttonmaprun);
+        MaterialButton boton1 = findViewById(R.id.buttonmaprun);
         boton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

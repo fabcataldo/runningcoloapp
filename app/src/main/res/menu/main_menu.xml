@@ -5,5 +5,7 @@
         android:id="@+id/lista_de_carreras"
         android:title="lista_de_carreras"
         android:icon="@android:drawable/btn_star_big_on"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+
+        />
 </menu>

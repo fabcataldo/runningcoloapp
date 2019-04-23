@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.design.button.MaterialButton;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -54,7 +55,8 @@ public class SplashActivity extends AppCompatActivity {
             goToRegistryActivity();
         }
 
-        Button boton_start=findViewById(R.id.button1);
+        MaterialButton boton_start=findViewById(R.id.button1);
+        //Button boton_start=findViewById(R.id.button1);
         boton_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

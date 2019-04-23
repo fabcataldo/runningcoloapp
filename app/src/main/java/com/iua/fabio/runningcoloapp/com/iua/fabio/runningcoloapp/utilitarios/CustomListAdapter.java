@@ -2,6 +2,7 @@ package com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.utilitarios;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.button.MaterialButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,16 +74,16 @@ public class CustomListAdapter extends BaseAdapter{
         final RaceData actualData = lcd.get(position);
 
             TextView racedata = convertView.findViewById(R.id.tvrace);
-            racedata.setText("" + actualData.getFecha());
+            racedata.setText(racedata.getText()+"\n" + actualData.getFecha());
 
-            Button boton = convertView.findViewById(R.id.buttondetail);
+            MaterialButton boton = convertView.findViewById(R.id.buttondetail);
             boton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     GoToDetailActivity(actualData);
                 }
             });
 
-            Button boton2 = convertView.findViewById(R.id.buttoneliminarregistro);
+            MaterialButton boton2 = convertView.findViewById(R.id.buttoneliminarregistro);
             boton2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

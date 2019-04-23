@@ -16,24 +16,27 @@
         android:layout_gravity="center"
         android:text="Querés publicar tu última carrera en Facebook?"
         android:textSize="30dp"
-        android:textColor="#000"
+        android:textColor="@color/mySecondColorRed"
         />
 
-    <Button
-        android:id="@+id/boton_yes_fb_share_race_act"
+    <android.support.design.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/boton_yes_fb_share_race_act"
         android:layout_marginTop="40dp"
         android:layout_gravity="center"
-        android:text="Si!!" />
+        android:text="Si!!"
+        style="@style/Widget.RunningColoApp.Button"
+        />
 
-    <Button
-        android:id="@+id/boton_no_fb_share_race_act"
+    <android.support.design.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/boton_no_fb_share_race_act"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="No, volver a la pantalla anterior" />
-
+        android:text="No, volver a la pantalla anterior"
+        style="@style/Widget.RunningColoApp.Button"
+        />
 
 </LinearLayout>

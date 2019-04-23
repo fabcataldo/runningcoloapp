@@ -2,6 +2,7 @@ package com.iua.fabio.runningcoloapp.com.iua.fabio.runningcoloapp.actividades;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.button.MaterialButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,8 +22,8 @@ public class FbShareRaceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fb_share_race);
         setTitle(R.string.titulo_fb_share_race_activity);
-        Button bsi=findViewById(R.id.boton_yes_fb_share_race_act);
-        Button bno=findViewById(R.id.boton_no_fb_share_race_act);
+        MaterialButton bsi=findViewById(R.id.boton_yes_fb_share_race_act);
+        MaterialButton bno=findViewById(R.id.boton_no_fb_share_race_act);
 
         bsi.setOnClickListener(new View.OnClickListener() {
             @Override

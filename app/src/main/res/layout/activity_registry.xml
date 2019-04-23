@@ -14,16 +14,19 @@
             android:id="@+id/toolbar"
         />
 
-    <Button
-        android:id="@+id/button2"
+    <android.support.design.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/button2"
+
         android:layout_gravity="center"
         android:layout_marginTop="100dp"
         android:text="@string/titulo_boton_pantalla_registro_go"
         android:textSize="20dp"
         android:textStyle="normal"
-        tools:textFontWeight="Arial" />
+        tools:textFontWeight="Arial"
+        style="@style/Widget.RunningColoApp.Button"
+        />
 
     <FrameLayout
         android:id="@+id/audiocontenedor"

@@ -8,6 +8,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.design.button.MaterialButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -123,7 +124,7 @@ public class RunningFragment extends Fragment{
 
         final TextView txtvritmo = actualV.findViewById(R.id.textvritmo);
 
-        final Button botons=actualV.findViewById(R.id.bstartcron);
+        final MaterialButton botons=actualV.findViewById(R.id.bstartcron);
         botons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +141,7 @@ public class RunningFragment extends Fragment{
             }
         });
 
-        Button botonstop=actualV.findViewById(R.id.bstopcron);
+        MaterialButton botonstop=actualV.findViewById(R.id.bstopcron);
         botonstop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +149,6 @@ public class RunningFragment extends Fragment{
                 detener(v);
             }
         });
-
 
         mLocationCallback = new LocationCallback() {
             public void onLocationResult(LocationResult location) {

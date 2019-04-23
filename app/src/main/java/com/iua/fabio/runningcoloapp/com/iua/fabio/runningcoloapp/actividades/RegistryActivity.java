@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.button.MaterialButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -45,7 +46,7 @@ public class RegistryActivity extends AppCompatActivity implements RunningFragme
 
         //PARA DESAPARECER el botoncito de GO, o empezar
         //y mostrar los fragments
-        final Button boton_start = findViewById(R.id.button2);
+        final MaterialButton boton_start = findViewById(R.id.button2);
         boton_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +55,7 @@ public class RegistryActivity extends AppCompatActivity implements RunningFragme
                 goToAudioListFragment(v);
             }
         });
+
     }
 
     //inflo el layout del menu, para la toolbar
